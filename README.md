@@ -52,3 +52,11 @@ Manage **compute, governance, and pipelines** on top of cloud object storage.
 - Apache Spark
 - Cloudera Data Platform (CDP)
 - Google Dataplex
+
+---
+## Data Preparation / Analytics Tools
+
+Alteryx → NOT a database, warehouse, or query engine.
+Instead, it sits above these systems.
+Pulls data from databases/warehouses/engines → transforms/cleans it → outputs to BI tools (Power BI, Tableau, Qlik) or back to storage.
+Similar “layer” to Informatica, Talend, Dataiku, Trifacta (Wrangler), KNIME.
