@@ -1,59 +1,54 @@
-# data_warehouse
+# Data Systems Overview
 
-Snowflake, Redshift = warehouses (storage + compute tightly integrated).
+---
 
-Trino/Starburst = query engines.
+## 👉 Key Difference
+- **Database** = data stored + queried in the same system (e.g., Postgres, MySQL)
+- **Specialized Database** = Non-relational like graph (Neptune) or Document (MongoDB)
+- **Data Warehouse** = specialized database for analytics (e.g., Snowflake, Redshift)  
+- **Query Engine** = queries data from external storage (e.g., Trino, DuckDB)  
+- **Lakehouse Platform** = combines storage + query + governance + ML (e.g., Databricks)
 
-Spark SQL = SQL interface on Spark (engine).
+---
 
-Databricks = Lakehouse platform (not just an engine, not just a warehouse).
+## 🏛 Databases (RDBMS & OLTP)
+Store data and provide SQL interface, usually row-oriented.
+- `PostgreSQL`
+- `MySQL`
+- `Oracle Database`
+- `Microsoft SQL Server`
+- MariaDB
+- Amazon Aurora (AWS’s managed relational DB, MySQL/Postgres compatible)
+  
+Other specialized DBs:
+- Amazon Neptune → Graph database (property graph + RDF)
+- MongoDB → Document DB
+- Cassandra → Wide-column NoSQL DB
+---
 
-```mermaid
-graph TD
+## 📦 Data Warehouses (Analytical DBs, OLAP)
+Bundle **storage + compute**, optimized for analytics at scale.
+- `Snowflake`
+- `Amazon Redshift`
+- `Google BigQuery`
+- Azure Synapse Analytics
+- `Teradata`
 
-subgraph Storage
-  S3[S3 / ADLS / GCS]
-  HDFS[HDFS]
-  InternalDW[Warehouse Internal Storage]
-end
+---
 
-subgraph Query_Engines
-  Trino[Trino]
-  Starburst["Starburst - Trino commercial"]
-  SparkSQL["Spark SQL"]
-end
+## 🔍 Query Engines
+Don’t own storage, query external data (data lakes or federated sources).
+- `Trino` (formerly PrestoSQL)
+- `Starburst` (enterprise Trino)
+- Apache Drill
+- `AWS Athena` (Presto/Trino-based)
+- Dremio
+- DuckDB - embedded analytical query engine
+---
 
-subgraph Data_Warehouses
-  Snowflake[Snowflake]
-  Redshift["Amazon Redshift"]
-end
-
-subgraph Platforms
-  Databricks[Databricks Lakehouse]
-end
-
-S3 --> Trino
-ADLS --> Trino
-GCS --> Trino
-HDFS --> Trino
-
-S3 --> Starburst
-ADLS --> Starburst
-GCS --> Starburst
-
-S3 --> SparkSQL
-ADLS --> SparkSQL
-GCS --> SparkSQL
-
-InternalDW --> Snowflake
-InternalDW --> Redshift
-
-S3 --> Databricks
-ADLS --> Databricks
-GCS --> Databricks
-HDFS --> Databricks
-
-Databricks --> SparkSQL
-Databricks --> MLflow
-Databricks --> DeltaLake[(Delta Lake Storage Layer)]
-```
+## ⚡ Data Platforms / Lakehouse
+Manage **compute, governance, and pipelines** on top of cloud object storage.
+- Databricks (Lakehouse built on Spark + Delta Lake)
+- Apache Spark
+- Cloudera Data Platform (CDP)
+- Google Dataplex
