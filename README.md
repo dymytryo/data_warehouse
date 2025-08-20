@@ -19,13 +19,13 @@ end
 
 subgraph Query_Engines
   Trino[Trino]
-  Starburst[Starburst (Trino commercial)]
-  SparkSQL[Spark SQL]
+  Starburst["Starburst - Trino commercial"]
+  SparkSQL["Spark SQL"]
 end
 
 subgraph Data_Warehouses
   Snowflake[Snowflake]
-  Redshift[Amazon Redshift]
+  Redshift["Amazon Redshift"]
 end
 
 subgraph Platforms
@@ -56,5 +56,4 @@ HDFS --> Databricks
 Databricks --> SparkSQL
 Databricks --> MLflow
 Databricks --> DeltaLake[(Delta Lake Storage Layer)]
-
 ```
