@@ -100,4 +100,75 @@ SELECT
 FROM
     starburst_query_history -- this is the incremental import created above
 ```
+# Documentation
+```
+version: 2
 
+models:
+  - name: starburst_query_history
+    description: >
+      Incremental log of Starburst/Trino completed queries joined to dbt_run_results by
+      query_id; standardizes error messages and surfaces execution metrics for the dbt
+      service user.
+    meta:
+      owner: data-platform
+    config:
+      +tags: ["observability", "starburst", "dbt"]
+    columns:
+      - name: query_id
+        description: "Warehouse query identifier; join key to dbt_run_results."
+        tests:
+          - not_null
+          - unique
+
+      - name: model_name
+        description: "dbt node name associated with the query (from dbt_run_results.name)."
+        tests:
+          - not_null
+
+      - name: materialization
+        description: "dbt materialization of the node that issued the query."
+        tests:
+          - accepted_values:
+              values: ["table", "view", "incremental", "snapshot", "seed", "test", "operation", "analysis"]
+              severity: warn
+
+      - name: user
+        description: "Warehouse user that ran the query (filtered to sa_dp_enterprise_prod@hq.bill.com)."
+
+      - name: full_error_message
+        description: "Raw engine failure_info payload from Starburst/Trino."
+
+      - name: error_message
+        description: "Normalized error label derived from failure_info.message patterns."
+
+      - name: total_rows
+        description: "Total rows reported by Starburst for the query."
+
+      - name: total_bytes
+        description: "Total bytes reported by Starburst for the query."
+
+      - name: create_time_pt
+        description: "Query start timestamp converted to America/Los_Angeles."
+
+      - name: end_time_pt
+        description: "Query end timestamp converted to America/Los_Angeles."
+
+      - name: execution_time
+        description: "Execution duration reported by Starburst."
+
+      - name: planning_time
+        description: "Planning duration reported by Starburst."
+
+      - name: query_state
+        description: "Final state of the query."
+
+      - name: query
+        description: "Submitted SQL text."
+
+    tests:
+      - relationships:
+          to: ref('dbt_run_results')
+          field: query_id
+          to_field: query_id
+```
