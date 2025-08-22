@@ -40,8 +40,6 @@ SELECT
     query_id,
     dbt.name AS model_name,
     dbt.materialization,
-    dbt.owner,
-    dbt.schema_name,
     usr AS user,
     failure_info AS full_error_message,
     CASE
@@ -71,20 +69,20 @@ SELECT
         CAST(REPLACE(CAST(create_time AT TIME ZONE 'America/Los_Angeles' AS VARCHAR), ' America/Los_Angeles', '') AS TIMESTAMP) AS create_time_pt,
         CAST(REPLACE(CAST(end_time AT TIME ZONE 'America/Los_Angeles' AS VARCHAR), ' America/Los_Angeles', '') AS TIMESTAMP)    AS end_time_pt,
         q.execution_time,
-        planning_time
-        query_state,
-        query
+        q.planning_time,
+        q.query_state,
+        q.query
         --user_agent,
         --source,
 FROM
     starburst_metadb_admin.public.completed_queries q
 JOIN
-    {{ ref('dbt_materialization_performance') }} dbt
+    {{ ref('dbt_run_results') }} dbt
     USING (query_id)
 WHERE
     True
     AND usr = 'prod_user'
-    AND query NOT LIKE 'EXECUTE%'
+    -- AND query NOT LIKE 'EXECUTE%'
     AND create_time >= DATE '2025-08-01'
     {% if is_incremental() %}
       AND create_time > CURRENT_DATE - INTERVAL '2' DAY
