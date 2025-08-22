@@ -80,4 +80,16 @@ WHERE
       AND create_time > (SELECT MAC(create_time) FROM {{ this }})
     {% endif %}
 ```
+Next, aggregate to get metrics: 
+```sql
+SELECT
+    DATE_TRUNC('day', create_time) AS  run_date,
+    COUNT_IF(query_state = 'FINISHED')*100.00/COUNT(*) AS etl_success_rate,
+    COUNT_IF(query_state = 'FINISHED') AS successful_queries,
+    COUNT_IF(query_state = 'FAILED') AS failed_etl_queries,
+    COUNT(*) AS failed_queries,
+    ARRAY_AGG(DISTINCT error_message)
+FROM
+    starburst_query_history -- this is the incremental import created above
+```
 
