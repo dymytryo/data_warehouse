@@ -1,0 +1,8 @@
+# Collect Snowflake statistics
+snowflake_stats_collection:
+  stage: scheduled
+  script:
+    - python -m scripts.misc.snowflake_collect_stats
+  rules:
+    - <<: *freeze_guard_rule
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $RUN_SNOWFLAKE_STATS == "true"
