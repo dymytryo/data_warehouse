@@ -1,0 +1,7 @@
+# Monitor Snowflake migration parity
+snowflake_migration_parity:
+  stage: scheduled
+  script:
+    - python -m scripts.misc.snowflake_migration_parity
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $RUN_SNOWFLAKE_MIGRATION_PARITY == "true"
