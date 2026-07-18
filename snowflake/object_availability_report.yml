@@ -1,0 +1,63 @@
+version: 2
+
+models:
+  - name: object_availability_report
+    description: >
+      Object-level migration inventory that maps in-scope Snowflake objects to
+      their expected source exposure and Iceberg destination, then calculates
+      the migration status used by the portfolio tracker.
+    meta:
+      owner: analytics-engineering
+    columns:
+      - name: source_catalog
+        description: Display label for the legacy warehouse catalog.
+      - name: source_schema
+        description: Source schema containing the legacy object.
+      - name: source_table
+        description: Source object name.
+      - name: source_object_type
+        description: Normalized source type, such as table, view, or materialized_view.
+      - name: is_snapshot
+        description: True when dbt metadata identifies the source object as a snapshot.
+      - name: is_ingestion
+        description: True when the source naming convention identifies an ingestion object.
+      - name: is_managed_by_dbt
+        description: True when the source object appears in dbt model metadata.
+      - name: dbt_model_name
+        description: Source dbt model name, when available.
+      - name: dbt_model_path
+        description: Source model path recorded by dbt metadata, when available.
+      - name: expected_source_schema
+        description: Derived source-exposure schema expected in the lakehouse.
+      - name: expected_source_table
+        description: Derived source-exposure table expected in the lakehouse.
+      - name: exposed_source_schema
+        description: Matching source-exposure schema found in the lakehouse.
+      - name: exposed_source_table
+        description: Matching source-exposure table found in the lakehouse.
+      - name: exposed_source_object_type
+        description: Normalized type for the matching source-exposure object.
+      - name: is_source_available
+        description: True when the expected source exposure exists.
+      - name: expected_target_schema
+        description: Derived schema for the transformed Iceberg object.
+      - name: expected_target_table
+        description: Derived name for the transformed Iceberg object.
+      - name: target_schema
+        description: Matching target schema found in the analytics lakehouse.
+      - name: target_table
+        description: Matching target object found in the analytics lakehouse.
+      - name: target_object_type
+        description: Normalized type for the matching target object.
+      - name: is_target_managed_by_dbt
+        description: True when the target object appears in dbt model metadata.
+      - name: target_dbt_model_name
+        description: Target dbt model name, when available.
+      - name: target_dbt_model_path
+        description: Target model path recorded by dbt metadata, when available.
+      - name: is_target_available
+        description: True when the expected target object exists.
+      - name: migration_status
+        description: >
+          True when all required source-exposure and target objects exist for
+          the source object's migration lane.

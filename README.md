@@ -1,5 +1,9 @@
 # Data Systems Overview
 
+## Portfolio case study
+
+- [Snowflake acquisition data integration](snowflake/README.md): BILL and Divvy workload consolidation into Starburst/Trino and Apache Iceberg under Sarbanes-Oxley (SOX) controls.
+
 ---
 
 ## 👉 Key Difference

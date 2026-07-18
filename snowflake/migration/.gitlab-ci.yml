@@ -2,6 +2,11 @@
 snowflake_migration_parity:
   stage: scheduled
   script:
-    - python -m scripts.misc.snowflake_migration_parity
+    - python snowflake/migration_parity.py
+  artifacts:
+    when: always
+    paths:
+      - artifacts/row_comparison.csv
+      - artifacts/column_comparison.csv
   rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule" && $RUN_SNOWFLAKE_MIGRATION_PARITY == "true"
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $RUN_MIGRATION_PARITY == "true"
