@@ -3,10 +3,18 @@ Check grants for a specific user:
 - `USAGE` -> you can kick-off queries 
 - `OPERATE` -> you can only manage jobs, but not start them
 ~~~sql
-SELECT DISTINCT gr.name AS warehouse, gr.grantee_name AS via_role, gr.privilege
-FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_ROLES gr
-WHERE gr.granted_on='WAREHOUSE' AND gr.privilege IN ('USAGE','OPERATE') AND gr.deleted_on IS NULL
-  AND gr.grantee_name IN (SELECT role FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_USERS
+SELECT DISTINCT
+  gr.name         AS warehouse,
+  gr.grantee_name AS via_role, gr.privilege
+FROM
+  SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_ROLES gr
+WHERE
+  True
+  AND gr.granted_on='WAREHOUSE'
+  AND gr.privilege IN ('USAGE','OPERATE')
+  AND gr.deleted_on IS NULL
+  AND gr.grantee_name IN (SELECT role
+                          FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_USERS
                           WHERE grantee_name = 'DBT_PROD' AND deleted_on IS NULL);
 ~~~
 Check all warehouses available:
