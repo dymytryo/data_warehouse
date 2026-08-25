@@ -1,3 +1,27 @@
+# Check grants 
+Check grants for a specific user:
+~~~sql
+SELECT DISTINCT gr.name AS warehouse, gr.grantee_name AS via_role, gr.privilege
+FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_ROLES gr
+WHERE gr.granted_on='WAREHOUSE' AND gr.privilege IN ('USAGE','OPERATE') AND gr.deleted_on IS NULL
+  AND gr.grantee_name IN (SELECT role FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_USERS
+                          WHERE grantee_name = 'DBT_PROD' AND deleted_on IS NULL);
+-- USAGE -> you can kick-off queries 
+-- OPERATE -> you can only manage jobs
+~~~
+Check all warehouses available:
+~~~sql
+SHOW WAREHOUSES;
+~~~
+Check the account level or a specific warehouse level:
+~~~sql
+SHOW PARAMETERS LIKE 'STATEMENT_TIMEOUT_IN_SECONDS' IN ACCOUNT;
+-- → value 172800, level '' (default)                     = 48h
+
+SHOW PARAMETERS LIKE 'STATEMENT_TIMEOUT_IN_SECONDS' IN WAREHOUSE DEV;
+-- → value 172800, level '' (default)                     = 48h  
+~~~
+
 # Snowflake role grants
 
 Patterns for granting and revoking access during a migration.
