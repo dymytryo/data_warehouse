@@ -4,6 +4,10 @@
 
 - [Snowflake acquisition data integration](snowflake/README.md): BILL and Divvy workload consolidation into Starburst/Trino and Apache Iceberg under Sarbanes-Oxley (SOX) controls.
 
+## Reference notes
+
+- [Snowflake reference notes](snowflake/reference/README.md): architecture, table and view types, micro-partitions, recovery, cloning, external tables, and secure data sharing.
+
 ---
 
 ## 👉 Key Difference
