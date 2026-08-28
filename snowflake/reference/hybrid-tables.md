@@ -6,6 +6,8 @@ enforced relational constraints, and indexes. Use it for operational state that
 must be read or changed quickly. Standard Snowflake tables remain the default for
 large analytical scans and batch transformations.
 
+A point lookup asks for one specific row by an exact key, such as order `1001`.
+
 Hybrid tables are generally available in commercial Amazon Web Services (AWS)
 and Microsoft Azure regions. They are not available in Google Cloud, SnowGov
 regions, or trial accounts.
@@ -114,6 +116,13 @@ TO ROLE <APPLICATION_ROLE>;
 This table supports fast order lookups and small status updates from an
 application while remaining joinable to analytical order history.
 
+An index is an additional lookup structure that associates selected column
+values with table records. When a query filters on an indexed value, Snowflake
+can inspect that structure to find the matching records instead of scanning the
+whole table. Hybrid tables automatically receive indexes for primary-key,
+unique, and foreign-key constraints. The `INDEX` clause creates an additional
+secondary index for another lookup pattern.
+
 ```sql
 USE ROLE <DEPLOYMENT_ROLE>;
 USE WAREHOUSE <WAREHOUSE>;
@@ -130,7 +139,16 @@ CREATE HYBRID TABLE ORDER_STATUS (
     INDEX IX_ORDER_STATUS_CUSTOMER (CUSTOMER_ID, UPDATED_AT)
         INCLUDE (STATUS, TOTAL_AMOUNT)
 );
+```
 
+| Table element | What it does | Lookup it supports |
+| --- | --- | --- |
+| Primary key on `ORDER_ID` | Creates an automatic unique index | Find one order by `ORDER_ID` |
+| Unique constraint on `EXTERNAL_ORDER_ID` | Creates another automatic unique index | Find one order by its external identifier |
+| Secondary index `IX_ORDER_STATUS_CUSTOMER` on `CUSTOMER_ID` and `UPDATED_AT` | Creates the named lookup path | Find a customer's orders within a time range |
+| Included columns `STATUS` and `TOTAL_AMOUNT` | Stores these output values with the secondary-index records; they are not additional lookup keys | Return status and amount without probing the underlying table rows |
+
+```sql
 INSERT INTO APPLICATION.ORDER_STATUS (
     ORDER_ID,
     EXTERNAL_ORDER_ID,
@@ -144,7 +162,23 @@ VALUES
     (1002, 'WEB-9002', 502, 'PAID', 80.00, '2026-08-28 09:05:00');
 ```
 
-The primary-key lookup uses the index instead of scanning the full table.
+This query filters on both secondary-index keys and selects only included
+columns, so Snowflake can answer it from the index without probing the table:
+
+```sql
+SELECT
+    STATUS,
+    TOTAL_AMOUNT
+FROM APPLICATION.ORDER_STATUS
+WHERE CUSTOMER_ID = 501
+  AND UPDATED_AT >= '2026-08-28 00:00:00';
+```
+
+| STATUS | TOTAL_AMOUNT |
+| --- | ---: |
+| PENDING | 125.00 |
+
+The following point lookup uses the automatic primary-key index:
 
 ```sql
 SELECT
@@ -194,10 +228,9 @@ The primary key and unique constraint are enforced. A second row with
 
 ## Indexes
 
-Snowflake automatically creates indexes for primary-key, unique, and foreign-key
-constraints. Add a secondary index only for a repeated lookup path that those
-indexes do not cover. Every additional index consumes storage and is maintained
-synchronously on writes.
+Add a secondary index only for a repeated lookup path that the automatic
+constraint indexes do not cover. Every additional index consumes storage and is
+maintained synchronously on writes.
 
 Secondary indexes can accelerate equality, range, `IN`, `BETWEEN`, `STARTSWITH`,
 and prefix `LIKE 'value%'` predicates. `ILIKE` does not qualify for index access.
