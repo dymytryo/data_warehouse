@@ -6,6 +6,7 @@
 
 ## Reference notes
 
+- [Database indexes](database-indexes/README.md): lookup structures, composite and covering indexes, query-plan evidence, and read/write tradeoffs.
 - [Snowflake reference notes](snowflake/reference/README.md): architecture, table and view types, hybrid tables, micro-partitions, recovery, cloning, external tables, and secure data sharing.
 
 ---
