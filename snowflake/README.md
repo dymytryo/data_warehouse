@@ -110,6 +110,12 @@ governed footprint. The maintenance pattern in
 statistics, snapshot expiration, orphan cleanup, row-count protection, and an
 optional audit record to each physical dbt build.
 
+## Snowflake reference notes
+
+Reusable notes on Snowflake architecture, storage, table types, recovery,
+performance, and data sharing live in [reference/](reference/README.md). They are
+kept separate from the migration-specific assets below.
+
 ## Portfolio assets
 
 | File | Purpose |
@@ -127,6 +133,17 @@ optional audit record to each physical dbt build.
 ~~~text
 snowflake/
 ├── README.md
+├── reference/
+│   ├── README.md
+│   ├── architecture-and-micro-partitions.md
+│   ├── cancel_query.sql
+│   ├── data-retention-and-backups.md
+│   ├── external-tables.md
+│   ├── micro-partitions-and-clustering.md
+│   ├── replication-groups-for-secure-data-sharing.md
+│   ├── secure-data-sharing.md
+│   ├── table-and-view-types.md
+│   └── zero-copy-cloning.md
 ├── migration_parity.py
 ├── object_availability_report.sql
 ├── object_availability_report.yml
@@ -135,6 +152,8 @@ snowflake/
 ├── increase_scan_times.md
 ├── snowflauseful_queries.md
 ├── GRANTS.md
+├── SOS.md
+├── data_retention.sql
 ├── iceberg.md
 ├── migration/
 │   └── .gitlab-ci.yml
