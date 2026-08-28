@@ -1,5 +1,5 @@
 
-`FDN` = "Flocon De Neige" (French for "snowflake") — Snowflake's proprietary internal table storage format, i.e. what a normal (native) Snowflake table is physically stored as.
+`FDN` = "Flocon De Neige" (French for "snowflake") — Snowflake's proprietary internal physical table storage format.
 So, each micro-partition would be in `.fdn` format.
 
 
