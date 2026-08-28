@@ -1,3 +1,14 @@
+
+`FDN` = "Flocon De Neige" (French for "snowflake") — Snowflake's proprietary internal table storage format, i.e. what a normal (native) Snowflake table is physically stored as.
+So, each micro-partition would be in `.fdn` format.
+
+
+
+
+
+
+
+
 # Snowflake acquisition data integration
 
 This case study shows how BILL consolidated Divvy's acquired analytics workloads
