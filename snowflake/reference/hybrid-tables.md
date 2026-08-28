@@ -116,10 +116,10 @@ TO ROLE <APPLICATION_ROLE>;
 This table supports fast order lookups and small status updates from an
 application while remaining joinable to analytical order history.
 
-See [Database indexes](../../database-indexes/README.md) for the general lookup
-model and design tradeoffs. In a Snowflake hybrid table, primary-key, unique, and
-foreign-key constraints create indexes automatically. The `INDEX` clause creates
-an additional secondary index for another lookup pattern.
+An index is a maintained lookup structure that lets Snowflake find matching rows
+without scanning the table. In a hybrid table, primary-key, unique, and foreign-key
+constraints create indexes automatically. The `INDEX` clause creates an additional
+secondary index for another lookup pattern.
 
 ```sql
 USE ROLE <DEPLOYMENT_ROLE>;
