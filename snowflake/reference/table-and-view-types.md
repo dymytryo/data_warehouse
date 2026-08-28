@@ -6,8 +6,8 @@ security, and cost.
 
 This note follows the core objects covered in Chapter 6 of *Snowflake SnowPro
 Advanced Architect Certification Companion*. Specialized objects such as
-dynamic tables, Iceberg tables, hybrid tables, event tables, and semantic views
-are separate topics.
+dynamic tables, Iceberg tables, [hybrid tables](hybrid-tables.md), event tables,
+and semantic views are separate topics.
 
 ```text
 Core objects covered in this note
