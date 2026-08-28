@@ -37,5 +37,10 @@ SOS pays off when `col` = `x` returns a tiny fraction of a table (<~1%)
 -> Medium: ~1,000 to ~100,000.
 -> High: ~100,000 to millions; "very high" near-unique (UUIDs, PKs, emails).
 ~~~sql
-
+SELECT
+  COUNT(*) AS n,
+APPROX_COUNT_DISTINCT (uuid) AS d,
+COUNT(*) / NULLIF(APPROX_COUNT_DISTINCT(uuid), 0) AS rows_per_value
+FROM
+  <database>.<schema>.<table>;
 ~~~
