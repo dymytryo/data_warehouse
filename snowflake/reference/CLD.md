@@ -22,12 +22,13 @@ ALTER DATABASE ICEBERG_PROD
 ```
 Read (quoted lowercase; catalog names are case-sensitive)
 ```sql
-SELECT * FROM ICEBERG_PROD_US."ledger_lake"."ledgerentry" LIMIT 10;
+SELECT * FROM ICEBERG_PROD."<schema-name>"."<table-name>" LIMIT 10;
 ```
 
 ```sql
 -- health / why-didn't-my-table-appear
 SELECT SYSTEM$CATALOG_LINK_STATUS('<CLD-name>');
+
 SELECT SYSTEM$CATALOG_LINK_STATUS('ICEBERG_PROD');
 ```
 ```
@@ -35,6 +36,10 @@ SELECT SYSTEM$CATALOG_LINK_STATUS('ICEBERG_PROD');
 ```
 -- force a re-sync
 ```sql
-ALTER DATABASE ICEBERG_PROD_US RESUME DISCOVERY;
+ALTER DATABASE <database-name>
+ RESUME DISCOVERY;
+
+ALTER DATABASE ICEBERG_PROD
+RESUME DISCOVERY;
 ```
 
