@@ -3,6 +3,12 @@
 So, each micro-partition would be in `.fdn` format.
 
 
+To run with a specific role and respective warehouse
+```sql
+USE ROLE <selected-role>;
+USE WAREHOUSE <selected-warehouse>;
+```
+
 
 
 
