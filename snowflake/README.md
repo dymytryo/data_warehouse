@@ -9,6 +9,17 @@ USE ROLE <selected-role>;
 USE WAREHOUSE <selected-warehouse>;
 ```
 
+Time travel 
+```sql
+CREATE TRANSIENT TABLE
+    <database>.<schema>
+        .<table>
+CLONE <database>.<schema>
+        .<table>
+BEFORE (
+    STATEMENT => '01c6bdbd-0217-09a7-005e-2e073fb2df2e'
+);
+```
 
 
 
