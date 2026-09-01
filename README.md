@@ -6,7 +6,7 @@
 
 ## Reference notes
 
-- [Snowflake reference notes](snowflake/reference/README.md): architecture, table and view types, micro-partitions, recovery, cloning, external tables, and secure data sharing.
+- [Snowflake reference notes](snowflake/reference/README.md): architecture, table and view types, hybrid tables, micro-partitions, recovery, cloning, external tables, and secure data sharing.
 
 ---
 

@@ -167,6 +167,7 @@ snowflake/
 │   ├── cancel_query.sql
 │   ├── data-retention-and-backups.md
 │   ├── external-tables.md
+│   ├── hybrid-tables.md
 │   ├── micro-partitions-and-clustering.md
 │   ├── replication-groups-for-secure-data-sharing.md
 │   ├── secure-data-sharing.md

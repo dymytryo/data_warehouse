@@ -370,7 +370,7 @@ These commands use the same micro-partition sharing model as a table clone.
 | --- | --- |
 | Historical container clone | Fails if a child table lacks the requested retained history. `IGNORE TABLES WITH INSUFFICIENT DATA RETENTION` skips those tables. |
 | External tables | Not cloned with a database or schema. |
-| Hybrid tables | A database clone physically copies hybrid-table row-store data and uses compute. A schema clone cannot include hybrid tables; `IGNORE HYBRID TABLES` skips them. |
+| [Hybrid tables](hybrid-tables.md) | A database clone physically copies hybrid-table row-store data and uses compute. A schema clone cannot include hybrid tables; `IGNORE HYBRID TABLES` skips them. |
 | Internal named stages | Omitted unless `INCLUDE INTERNAL STAGES` is specified. With a directory table, registered files are copied and can incur charges; without one, the cloned stage is empty. |
 | Pipes | Pipes referencing internal stages are not cloned. Pipes referencing external stages are cloned but initially paused or stopped. |
 | Table grants | `COPY GRANTS` copies explicit privileges except `OWNERSHIP`. Without it, explicit source grants are not copied. |
