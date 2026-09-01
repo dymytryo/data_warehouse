@@ -1,5 +1,3 @@
-# Snowflake UNDROP Recovery Playbook
-
 ## What UNDROP does
 
 `UNDROP` restores a dropped Snowflake object using **Time Travel**. For tables, it restores the most recently dropped version unless a specific dropped object ID is supplied.
