@@ -105,6 +105,12 @@ ON EQUALITY(transaction_uuid);
 
 Snowflake generally recommends enabling SOS only on the columns that actually need it rather than blindly enabling it for the entire table.
 
+You can also remove search optimization: 
+```sql
+ALTER TABLE <database>.<schema>.<table>
+DROP SEARCH OPTIMIZATION;
+```
+
 ---
 
 # Search Methods
